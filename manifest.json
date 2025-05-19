@@ -1,0 +1,16 @@
+{
+  "name": "Copy Variables to CSS variables",
+  "id": "1470777269812001046",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": ["inspect"],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": ["figma", "dev"],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  }
+}

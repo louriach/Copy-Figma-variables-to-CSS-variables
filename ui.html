@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS & Variables Output</title>
+    <style>
+      /* http://meyerweb.com/eric/tools/css/reset/ 
+         v2.0 | 20110126
+         License: none (public domain)
+      */
+      
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed, 
+      figure, figcaption, footer, header, hgroup, 
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article, aside, details, figcaption, figure, 
+      footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol, ul {
+        list-style: none;
+      }
+      blockquote, q {
+        quotes: none;
+      }
+      blockquote:before, blockquote:after,
+      q:before, q:after {
+        content: '';
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      
+      body {
+        background-color: #f0f0f0;
+        color: #0B324A;
+        font-family: Inter, sans-serif;
+        font-size: 13px;
+        margin: 0;
+        text-align: center;
+      }
+      
+      .mb-2 {
+        margin-bottom: 12px;
+      }
+      
+      .button-group {
+        display: flex;
+        gap: 8px;
+      }
+      
+      .button-primary {
+        background: linear-gradient(180deg, #106DD1 0%, #1064D0 11.11%, #105ACF 22.22%, #1051CE 33.33%, #1048CD 44.44%, #0F3FCB 55.56%, #0F35CA 66.67%, #0F2DC9 77.78%, #0F24C8 88.89%, #0F1BC7 100%);
+        width: 100%;
+        border: none;
+        border-radius: 6px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, .1), 0 2px 8px rgba(0, 0, 0, .1);
+        color: white;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: .3px;
+        padding: 12px 20px;
+        transition: all ease .1s;
+      }
+      
+      .button-primary:hover {
+        background: linear-gradient(180deg, #0957AA 0%, #094EA6 11.11%, #0845A3 22.22%, #083C9F 33.33%, #08339B 44.44%, #072B98 55.56%, #072394 66.67%, #071C90 77.78%, #06158D 88.89%, #060E89 100%);
+        box-shadow: 0 4px 2px rgba(0, 0, 0, .1), 0 2px 20px rgba(0, 0, 0, .1);
+      }
+      
+      .button-primary.disabled {
+        opacity: 0.1;
+        pointer-events: none;
+      }
+      
+      .button-primary.active {
+        opacity: 1;
+      }
+      
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        background-color: #f4f4f4;
+        padding: 15px;
+        max-height: 300px;
+        overflow-y: auto;
+        text-align: left;
+        transition: all 0.3s ease;
+      }
+      
+      table {
+        background-color: white;
+        border: 1px solid rgba(0,0,0,.2);
+        box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.025);      
+        overflow: hidden;
+        width: 100%;
+      }
+      
+      th, td {
+        border: 1px solid #eee;
+        font-size: 11px;
+        padding: 9px;
+        text-align: left;
+      }
+      
+      th {
+        background-color: #f4f4f4;
+        font-weight: 600;
+      }
+      
+      td {
+        vertical-align: middle;
+      }
+      
+      td span:first-child {
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 2px;
+      }
+      
+      .table-container, .collection-table {
+        margin-bottom: 24px;
+      }
+      
+      .table-container:last-child {
+        margin-bottom: 0;
+      }
+      
+      #variablesContainer {
+        gap: 16px;
+      }
+      
+      .collection-wrapper {
+        border-radius: 6px;
+        flex: 1;
+      }
+      
+      .collection-wrapper:last-child {
+        margin-bottom: 0;
+      }
+      
+      .title {
+        background: rgba(21, 107, 199, 0.1);
+        border-radius: 6px;
+        color: #0D498A;
+        padding: 8px;
+      }
+      
+      .table-wrapper, .collection-table {
+        border-radius: 6px;
+        box-shadow: 0px 2px 2px rgba(0,0,0,.03), 0px 2px 6px rgba(0,0,0,.03);
+        max-height: 220px;
+        overflow: scroll;
+      }    
+      
+      .alias-pill {
+        background: #f0f0f0;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        padding: 2px 6px;
+      }
+      
+      .gradient {
+        background: linear-gradient(180deg, #106DD1 0%, #1064D0 11.11%, #105ACF 22.22%, #1051CE 33.33%, #1048CD 44.44%, #0F3FCB 55.56%, #0F35CA 66.67%, #0F2DC9 77.78%, #0F24C8 88.89%, #0F1BC7 100%);
+        bottom: 0;
+        left: 0;
+        opacity: 0.05;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: -1;
+      }
+      
+      .no-collections {
+        background: rgba(21, 107, 199, 0.1);
+        border-radius: 6px;
+        color: #0D498A;
+        padding: 8px;
+      }
+      
+      .section {
+        background: rgba(255,255,255,.5);
+        border: 1px solid rgba(255,255,255,.9);
+        box-shadow: 0 1px 0 rgba(0,0,0,.05);
+        border-radius: 9px;
+        margin-bottom: 16px;
+        padding: 16px;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .section:last-child {
+        margin-bottom: 0;
+      }
+      
+      .generated-css {
+        background-color: #f5f5f5;  
+        border-radius: 9px; 
+        font-family: "Courier New", monospace;
+        min-height: 80px;
+        max-height: 320px;
+        padding: 12px; 
+        overflow-y: auto;
+        white-space: pre-wrap; 
+        word-wrap: break-word; 
+        width: 100%;
+      }
+      
+      .generated-css.generated {
+        height: 400px;
+      }
+      
+      .collection-picker {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .collection-name, h3 {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        text-align: left;
+      }
+      
+      .collection-label {
+        font-weight: 300;
+      }
+      
+      .variable-counter {
+        float: right;
+        font-weight: 300;
+      }
+      
+      .section-title {
+        font-size: 15px;
+      }
+      
+      .local-collections {
+          background-color: rgba(0,0,0,.02);
+          border: 1px solid rgba(0,0,0,.1);
+          border-radius: 9px;
+      }
+      .local-collections div, .local-collections li {
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, .07);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 01);
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+      }
+      
+      .local-collections div:last-child, .local-collections li:last-child {
+        border: none;
+        box-shadow: none;
+      }
+      
+      label {
+        font-size: 14px;
+        color: #333;
+      }
+      
+      input[type="radio"] {
+        margin: 0;
+        height: 24px;
+        width: 24px;
+      }
+      
+      .tabs {    
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        padding: 12px 16px;
+      }
+      
+      .tab {
+        box-shadow: inset 0 0px 4px rgba(0, 0, 0, .07);
+        border-radius: 9px;
+        border: 2px solid rgba(255, 255, 255, .3);
+        font-weight: 500;
+        padding: 8px 10px;
+        cursor: pointer;
+      }
+      
+      .tab:hover {
+        background: rgba(255,255,255,.2);
+      }
+      
+      .tab.active {
+        background-color: white;
+        border: 1px solid #fff;
+        border-bottom: none;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, .025), 0 1px 1px rgba(0, 0, 0, .025);
+        position: relative;
+      }
+      
+      .container {
+        display: none;
+        padding: 16px;
+      }
+      
+      .container.active {
+        display: block;
+      }    
+      
+      .plugin-border {
+        background: rgba(255,255,255,.5);
+        position: fixed;
+        z-index: 1;
+      }
+      
+      .plugin-border-bottom {
+        bottom: 0;
+        height: 2px;
+        left: 0;
+        right: 0;
+      }
+      
+      .plugin-border-left {
+        bottom: 0;
+        left: 0;
+        top: 0;
+        width: 2px;
+      }
+      
+      .plugin-border-right {
+        bottom: 0;
+        right: 0;
+        top: 0;
+        width: 2px;
+      }
+      
+      .plugin-border-top {
+        height: 2px;
+        left: 0;
+        right: 0;
+        top: 0;
+      }
+      
+      .swatch {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+        vertical-align: middle;
+        border: 1px solid rgba(0,0,0,.2);
+      }
+
+      .message {
+        background: rgba(16,109,209,.1);
+        border-radius: 9px;
+        border: 1px solid rgba(16,109,209,.3);
+        color: #070e6e;
+        display: none;
+        font-weight: 500;
+        flex-direction: column;
+        margin-top: 16px;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .message p {
+        line-height: 150%;
+        margin-bottom: 12px;
+      }
+
+      .message p:last-child {
+        margin-bottom: 0;
+      }
+
+      .message code {
+        background: rgba(0, 0, 0, .05);
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 4px;
+        padding: 2px;
+      }
+
+      .message a {
+        color: #070e6e;
+      }
+
+      .message a:hover {
+        text-decoration: none;
+      }
+
+      .section-convert {
+        margin-top: 8px;
+        padding: 6px;
+      }
+
+      .syntax {
+        padding: 8px;
+      }
+
+
+      input[type=checkbox] + label {
+        align-items: center;
+        display: flex;
+        color: #0F24C8;
+        cursor: pointer;
+        justify-content: center;
+      }
+
+      input[type=checkbox] {
+        display: none;
+      }
+
+      input[type=checkbox] + label:before {
+        align-items: center;
+        border: 2px solid #0F24C8;
+        border-radius: 3px;
+        color: transparent;
+        content: "\2715";
+        display: flex;
+        height: 16px;
+        justify-content: center;
+        margin-right: 4px;
+        transition: .1s;
+        vertical-align: middle;
+        width: 16px;
+      }
+
+      input[type=checkbox] + label:active:before {
+        transform: scale(.9);
+      }
+
+      input[type=checkbox]:checked + label:before {
+        background-color: #0F24C8;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="plugin-border plugin-border-bottom"></div>
+    <div class="plugin-border plugin-border-left"></div>
+    <div class="plugin-border plugin-border-right"></div>
+    <div class="plugin-border plugin-border-top"></div>
+    
+    <div class="gradient"></div>
+    
+    <!-- Tab Headers: Added new "All variables" tab as first -->
+    <div class="tabs">
+      <div id="tab-btn-all" class="tab active">Convert all variables</div>
+      <div id="tab-btn-convert" class="tab">Cherry pick</div>
+      <div id="tab-btn-collections" class="tab">All local collections</div>
+    </div>
+    
+    <!-- Tab Content: All variables -->
+    <div id="tab-all" class="container active">
+
+     <div class="section">
+        <h3 class="collection-name">Local collections</h3>
+        <div id="collections-list">
+          <!-- List gets populated dynamically -->
+        </div>
+        <div class="section section-convert">
+          <button id="convert-all" class="button-primary">Convert to CSS</button>
+          <!-- New checkbox for code syntax -->
+          <div class="syntax">
+            <input type="checkbox" id="all-use-code-syntax" />
+            <label for="all-use-code-syntax">Use code syntax</label>
+          </div>
+        </div>        
+      </div>
+      <div class="section">
+        <h3>CSS variables</h3>
+        <textarea id="all-css-output" class="generated-css section"></textarea>
+        <div class="button-group">
+          <button id="copy-css-all" class="button-primary disabled">Copy CSS</button>
+          <button id="export-css-all" class="button-primary disabled">Export CSS</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab Content: Convert Section -->
+    <div id="tab-convert" class="container">
+      <div id="chooseCollectionOrder" class="section">
+        <div class="collection-picker">
+          <div class="collection-wrapper collection-root">
+            <h3 class="title">Primitive collection</h3>
+            <div id="rootSection" class="local-collections">
+              <!-- Radio buttons inserted here -->
+            </div>
+          </div>
+          <div class="collection-wrapper collection-semantic">
+            <h3 class="title">Semantic collection</h3>
+            <div id="themeSection" class="local-collections">
+              <!-- Radio buttons inserted here -->
+            </div>
+          </div>
+        </div>
+        <div class="section section-convert">
+          <button id="convert" class="button-primary">Convert to CSS</button>
+          <!-- New checkbox for code syntax -->
+          <div class="syntax">
+            <input type="checkbox" id="convert-use-code-syntax" />
+            <label for="convert-use-code-syntax">Use code syntax</label>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="collection-wrapper">
+          <h3>CSS Variables Output</h3>
+          <textarea id="css-output" class="generated-css section"></textarea>
+          <div class="button-group">
+            <button id="copy-css" class="button-primary disabled">Copy CSS</button>
+            <button id="export-css" class="button-primary disabled">Export CSS</button>
+          </div>
+          <div class="message">
+            <h3>Working with light and dark mode</h3>
+            <p>Add <code>@media(prefers-color-scheme: dark){}</code> around the <code>root:</code> for your dark mode variables.</p>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">Learn more</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab Content: Collections Section -->
+    <div id="tab-collections" class="container">
+      <div id="tables-container">
+        <!-- One table per collection will be inserted here -->
+      </div>
+    </div>
+    
+    <script>
+      // Global variables
+      let scannedVariables = [];
+      let availableCollections = [];
+      let selectedRoot = null;
+      let selectedTheme = null;
+      
+      // Populate radio groups with available collections.
+      function populateRadioGroups(collections) {
+        const rootSection = document.getElementById("rootSection");
+        const themeSection = document.getElementById("themeSection");
+      
+        // Clear any previous content.
+        rootSection.innerHTML = "";
+        themeSection.innerHTML = "";
+      
+        collections.forEach((collection) => {
+          // Primitive (root) radio.
+          const rootDiv = document.createElement("div");
+          const rootRadio = document.createElement("input");
+          rootRadio.type = "radio";
+          rootRadio.name = "rootCollection";
+          rootRadio.value = collection.id;
+          rootRadio.id = "root-" + collection.id;
+          rootRadio.addEventListener("change", () => {
+            selectedRoot = collection.id;
+          });
+          const rootLabel = document.createElement("label");
+          rootLabel.htmlFor = rootRadio.id;
+          rootLabel.textContent = collection.name;
+          rootDiv.appendChild(rootRadio);
+          rootDiv.appendChild(rootLabel);
+          rootSection.appendChild(rootDiv);
+      
+          // Semantic (theme) radio.
+          const themeDiv = document.createElement("div");
+          const themeRadio = document.createElement("input");
+          themeRadio.type = "radio";
+          themeRadio.name = "themeCollection";
+          themeRadio.value = collection.id;
+          themeRadio.id = "theme-" + collection.id;
+          themeRadio.addEventListener("change", () => {
+            selectedTheme = collection.id;
+          });
+          const themeLabel = document.createElement("label");
+          themeLabel.htmlFor = themeRadio.id;
+          themeLabel.textContent = collection.name;
+          themeDiv.appendChild(themeRadio);
+          themeDiv.appendChild(themeLabel);
+          themeSection.appendChild(themeDiv);
+        });
+      }
+      
+      // Build variable tables for each collection, with a color swatch for color variables.
+      function buildVariablesTables(variables, collections) {
+        const container = document.getElementById("tables-container");
+        container.innerHTML = "";
+        
+        collections.forEach((collection) => {
+          const varsForCollection = variables.filter(v => v.collectionId === collection.id);
+          if (varsForCollection.length > 0) {
+            // Create outer wrapper for the collection.
+            const collectionDiv = document.createElement("div");
+            collectionDiv.classList.add("collection");
+            
+            // Create an h3 heading above the table.
+            const heading = document.createElement("h3");
+            heading.classList.add("title");
+            heading.textContent = collection.name;
+            collectionDiv.appendChild(heading);
+            
+            // Create a wrapper div for the table.
+            const tableWrapper = document.createElement("div");
+            tableWrapper.classList.add("collection-table");
+            
+            // Create the table.
+            const table = document.createElement("table");
+            
+            // Build table header.
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            
+            // First column: variable name.
+            const thName = document.createElement("th");
+            thName.textContent = "Name";
+            headerRow.appendChild(thName);
+            
+            // Create header cells for each mode.
+            collection.modes.forEach(mode => {
+              const th = document.createElement("th");
+              th.textContent = mode.name;
+              headerRow.appendChild(th);
+            });
+            
+            // Add an extra header cell for Web syntax.
+            const thWeb = document.createElement("th");
+            thWeb.textContent = "Code syntax";
+            headerRow.appendChild(thWeb);
+            
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Build table body.
+            const tbody = document.createElement("tbody");
+            
+            varsForCollection.forEach(variable => {
+              const tr = document.createElement("tr");
+              
+              // First column: variable name.
+              const tdName = document.createElement("td");
+              tdName.textContent = variable.name;
+              tr.appendChild(tdName);
+              
+              // Each mode column.
+              collection.modes.forEach(mode => {
+                const td = document.createElement("td");
+                let value = variable.modeValues[mode.modeId] || "";
+                if (value.startsWith("alias:")) {
+                  // Remove "alias:" prefix.
+                  let aliasText = value.slice(6);
+                  // If there is a delimiter, only keep the first part.
+                  if (aliasText.indexOf(":::") !== -1) {
+                    aliasText = aliasText.split(":::")[0];
+                  }
+                  // Normalize alias text.
+                  aliasText = aliasText.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                  // Create a span with class "alias-pill".
+                  const aliasPill = document.createElement("span");
+                  aliasPill.classList.add("alias-pill");
+                  aliasPill.textContent = aliasText;
+                  td.appendChild(aliasPill);
+                } else if (/^#[0-9a-f]{3,6}$/i.test(value) || /^rgba\(/i.test(value)) {
+                  // For non-alias color values, insert a swatch.
+                  const swatch = document.createElement("span");
+                  swatch.classList.add("swatch");
+                  swatch.style.backgroundColor = value;
+                  td.appendChild(swatch);
+                  td.appendChild(document.createTextNode(" " + value));
+                } else {
+                  td.textContent = value;
+                }
+                tr.appendChild(td);
+              });
+              
+              // Extra column for Web syntax.
+              const tdWeb = document.createElement("td");
+              // Use the helper function to get the web code syntax.
+              const webSyntax = getWebCodeSyntax(variable);
+              tdWeb.textContent = webSyntax || "";
+              tr.appendChild(tdWeb);
+              
+              tbody.appendChild(tr);
+            });
+            
+            table.appendChild(tbody);
+            tableWrapper.appendChild(table);
+            collectionDiv.appendChild(tableWrapper);
+            container.appendChild(collectionDiv);
+          }
+        });
+      }
+      
+      // Populate the "All variables" tab's collections list.
+      function populateCollectionsList(collections) {
+        const listContainer = document.getElementById("collections-list");
+        listContainer.innerHTML = "";
+      
+        if (collections.length === 0) {
+          listContainer.textContent = "No collections found.";
+          return;
+        }
+      
+        const ul = document.createElement("ul");
+        ul.classList.add("local-collections");
+        collections.forEach(collection => {
+          const li = document.createElement("li");
+          li.textContent = collection.name;
+          ul.appendChild(li);
+        });
+        listContainer.appendChild(ul);
+      }
+      
+      // Tab switching logic.
+      function switchTab(tabId) {
+        const tabs = document.querySelectorAll(".container");
+        tabs.forEach(tab => {
+          tab.classList.remove("active");
+        });
+        document.getElementById(tabId).classList.add("active");
+        
+        // Update tab header classes.
+        document.querySelectorAll(".tabs .tab").forEach(tabButton => {
+          tabButton.classList.remove("active");
+        });
+        if (tabId === "tab-all") {
+          document.getElementById("tab-btn-all").classList.add("active");
+        } else if (tabId === "tab-convert") {
+          document.getElementById("tab-btn-convert").classList.add("active");
+        } else if (tabId === "tab-collections") {
+          document.getElementById("tab-btn-collections").classList.add("active");
+        }
+      }
+      
+      // Set up tab header click events.
+      document.getElementById("tab-btn-all").onclick = () => switchTab("tab-all");
+      document.getElementById("tab-btn-convert").onclick = () => switchTab("tab-convert");
+      document.getElementById("tab-btn-collections").onclick = () => switchTab("tab-collections");
+        
+      // Handle messages from the main code.
+      onmessage = (event) => {
+        const msg = event.data.pluginMessage;
+        if (msg.type === "init-data") {
+          scannedVariables = msg.variables;
+          availableCollections = msg.collections;
+          // Populate UI components.
+          populateRadioGroups(availableCollections);
+          populateCollectionsList(availableCollections);
+          buildVariablesTables(scannedVariables, availableCollections);
+          
+          // Log all variables that have a codeSyntax applied.
+          console.log("Variables with codeSyntax:");
+          scannedVariables
+            .filter(variable => variable.codeSyntax && variable.codeSyntax !== "")
+            .forEach((variable, index) => {
+              console.log(`Variable[${index}]: ${variable.name}`, variable.codeSyntax);
+            });
+          
+        } else if (msg.type === "display-css") {
+          const cssOutputElem = document.getElementById("css-output");
+          cssOutputElem.value = msg.css;
+          cssOutputElem.classList.add("generated");
+          cssOutputElem.style.setProperty("height", "400px", "important");
+          document.getElementById("copy-css").classList.remove("disabled");
+          document.getElementById("copy-css").classList.add("active");
+          document.getElementById("export-css").classList.remove("disabled");
+          document.getElementById("export-css").classList.add("active");
+        } else if (msg.type === "error") {
+          alert("Error: " + msg.message);
+        }
+      };
+      
+      // Initially disable the Copy and Export CSS buttons (for convert tab).
+      document.getElementById("copy-css").classList.add("disabled");
+      document.getElementById("export-css").classList.add("disabled");
+
+      function getWebCodeSyntax(variable) {
+        if (variable.codeSyntax) {
+          if (typeof variable.codeSyntax === "object") {
+            // If there is a "WEB" property, use that.
+            if (variable.codeSyntax.WEB) {
+              return variable.codeSyntax.WEB;
+            }
+          } else if (typeof variable.codeSyntax === "string") {
+            // If it’s a string, assume it’s the CSS name.
+            return variable.codeSyntax;
+          }
+        }
+        return "";
+      }  
+    
+      // ---------------------------------------------
+      // Conversion logic for the Convert tab.
+      function convertTabCss() {
+        // Read state from the "convert-use-code-syntax" checkbox.
+        const useCodeSyntax = document.getElementById("convert-use-code-syntax").checked;
+        
+        if (!selectedRoot || !selectedTheme) {
+          alert("Please select both a primitive and a semantic collection.");
+          return;
+        }
+        let cssLines = [];
+        
+        // PROCESS PRIMITIVE (root) collection.
+        const rootColl = availableCollections.find(c => c.id === selectedRoot);
+        let defaultModeId = "";
+        let primitiveModeName = "default mode";
+        if (rootColl && rootColl.modes && rootColl.modes.length > 0) {
+          defaultModeId = rootColl.modes[0].modeId;
+          primitiveModeName = rootColl.modes[0].name;
+        }
+        cssLines.push(`/* Collection name: ${rootColl.name} */`);
+        cssLines.push(`/* Mode: ${primitiveModeName} */`);
+        cssLines.push(":root {");
+        const rootVars = scannedVariables.filter(v => v.collectionId === selectedRoot);
+        
+        rootVars.forEach(variable => {
+          // Compute CSS variable name using code syntax if available.
+          let cssName = "";
+          if (useCodeSyntax) {
+            const syntaxName = getWebCodeSyntax(variable);
+            if (syntaxName !== "") {
+              cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+            } else {
+              cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+            }
+          } else {
+            cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+          }
+          // The value remains as the default mode value.
+          let defaultValue = defaultModeId ? variable.modeValues[defaultModeId] || "" : "";
+          if (defaultValue.startsWith("alias:")) {
+            let aliasName = defaultValue.slice(6);
+            aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+            defaultValue = `var(--${aliasName})`;
+          }
+          
+          cssLines.push(`  --${cssName}: ${defaultValue};`);
+        });
+        cssLines.push("}");
+        cssLines.push("");
+        
+        // PROCESS SEMANTIC (theme) collection for each mode.
+        const themeColl = availableCollections.find(c => c.id === selectedTheme);
+        if (themeColl && themeColl.modes && themeColl.modes.length > 0) {
+          const themeVars = scannedVariables.filter(v => v.collectionId === selectedTheme);
+          themeColl.modes.forEach(mode => {
+            cssLines.push(`/* Collection name: ${themeColl.name} */`);
+            cssLines.push(`/* Mode: ${mode.name} */`);
+            cssLines.push(":root {");
+            themeVars.forEach(variable => {
+              let cssName = "";
+              if (useCodeSyntax) {
+                const syntaxName = getWebCodeSyntax(variable);
+                if (syntaxName !== "") {
+                  cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                } else {
+                  cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                }
+              } else {
+                cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+              }
+              let modeDefault = variable.modeValues[mode.modeId] || "";
+              if (modeDefault.startsWith("alias:")) {
+                let aliasName = modeDefault.slice(6);
+                aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                modeDefault = `var(--${aliasName})`;
+              }
+              cssLines.push(`  --${cssName}: ${modeDefault};`);
+            });
+            cssLines.push("}");
+            cssLines.push("");
+          });
+        }
+        
+        const cssOutput = cssLines.join("\n");
+        const cssOutputElem = document.getElementById("css-output");
+        cssOutputElem.value = cssOutput;
+        cssOutputElem.classList.add("generated");
+        cssOutputElem.style.setProperty("height", "400px", "important");
+        document.getElementById("copy-css").classList.remove("disabled");
+        document.getElementById("copy-css").classList.add("active");
+        document.getElementById("export-css").classList.remove("disabled");
+        document.getElementById("export-css").classList.add("active");
+
+        document.querySelector("#tab-convert .message").style.display = "flex";
+        
+        parent.postMessage({ pluginMessage: { type: "display-css", css: cssOutput } }, "*");
+      }
+      
+      // Conversion logic for the All Variables tab.
+      function allVariablesTabCss() {
+        // Read state from the "all-use-code-syntax" checkbox.
+        const useCodeSyntax = document.getElementById("all-use-code-syntax").checked;
+        let cssLines = [];
+        availableCollections.forEach(collection => {
+          let defaultModeName = "default mode";
+          let defaultModeId = "";
+          if (collection.modes && collection.modes.length > 0) {
+            defaultModeId = collection.modes[0].modeId;
+            defaultModeName = collection.modes[0].name;
+          }
+          cssLines.push(`/* Collection name: ${collection.name} */`);
+          cssLines.push(`/* Mode: ${defaultModeName} */`);
+          cssLines.push(":root {");
+          const collVars = scannedVariables.filter(v => v.collectionId === collection.id);
+          collVars.forEach(variable => {
+            let cssName = "";
+            if (useCodeSyntax) {
+              const syntaxName = getWebCodeSyntax(variable);
+              if (syntaxName !== "") {
+                cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+              } else {
+                cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+              }
+            } else {
+              cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+            }
+            let defaultValue = defaultModeId ? variable.modeValues[defaultModeId] || "" : "";
+            if (defaultValue.startsWith("alias:")) {
+              let aliasName = defaultValue.slice(6);
+              aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+              defaultValue = `var(--${aliasName})`;
+            }
+            cssLines.push(`  --${cssName}: ${defaultValue};`);
+          });
+          cssLines.push("}");
+          cssLines.push("");
+        });
+        
+        const cssOutput = cssLines.join("\n");
+        const allCssOutputElem = document.getElementById("all-css-output");
+        allCssOutputElem.value = cssOutput;
+        allCssOutputElem.classList.add("generated");
+        allCssOutputElem.style.setProperty("height", "400px", "important");
+        document.getElementById("copy-css-all").classList.remove("disabled");
+        document.getElementById("copy-css-all").classList.add("active");
+        document.getElementById("export-css-all").classList.remove("disabled");
+        document.getElementById("export-css-all").classList.add("active");
+      }
+      
+      // Attach conversion functions to buttons.
+      document.getElementById("convert").onclick = convertTabCss;
+      document.getElementById("convert-all").onclick = allVariablesTabCss;
+      
+      // Copy and Export for Convert tab.
+      document.getElementById("copy-css").onclick = () => {
+        const cssText = document.getElementById("css-output").value;
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          navigator.clipboard.writeText(cssText)
+            .then(() => alert("CSS copied!"))
+            .catch((err) => alert("Failed to copy CSS: " + err));
+        } else {
+          const textarea = document.getElementById("css-output");
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("CSS copied!");
+          } catch (err) {
+            alert("Failed to copy CSS: " + err);
+          }
+        }
+      };
+      
+      document.getElementById("export-css").onclick = () => {
+        const cssText = document.getElementById("css-output").value;
+        const blob = new Blob([cssText], { type: "text/css" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "variables.css";
+        anchor.click();
+        URL.revokeObjectURL(url);
+      };
+      
+      // Copy and Export for All Variables tab.
+      document.getElementById("copy-css-all").onclick = () => {
+        const cssText = document.getElementById("all-css-output").value;
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          navigator.clipboard.writeText(cssText)
+            .then(() => alert("CSS copied!"))
+            .catch((err) => alert("Failed to copy CSS: " + err));
+        } else {
+          const textarea = document.getElementById("all-css-output");
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("CSS copied!");
+          } catch (err) {
+            alert("Failed to copy CSS: " + err);
+          }
+        }
+      };
+      
+      document.getElementById("export-css-all").onclick = () => {
+        const cssText = document.getElementById("all-css-output").value;
+        const blob = new Blob([cssText], { type: "text/css" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "all-variables.css";
+        anchor.click();
+        URL.revokeObjectURL(url);
+      };
+    </script>
+  </body>
+</html>
