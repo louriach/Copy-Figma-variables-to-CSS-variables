@@ -1,552 +1,773 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>CSS & Variables Output</title>
-    <style>
-      /* http://meyerweb.com/eric/tools/css/reset/ 
+<head>
+  <meta charset="utf-8">
+  <title>Figma CSS Variables</title>
+  <style>
+    /* http://meyerweb.com/eric/tools/css/reset/ 
          v2.0 | 20110126
          License: none (public domain)
       */
       
-      html, body, div, span, applet, object, iframe,
-      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-      a, abbr, acronym, address, big, cite, code,
-      del, dfn, em, img, ins, kbd, q, s, samp,
-      small, strike, strong, sub, sup, tt, var,
-      b, u, i, center,
-      dl, dt, dd, ol, ul, li,
-      fieldset, form, label, legend,
-      table, caption, tbody, tfoot, thead, tr, th, td,
-      article, aside, canvas, details, embed, 
-      figure, figcaption, footer, header, hgroup, 
-      menu, nav, output, ruby, section, summary,
-      time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-      }
-      /* HTML5 display-role reset for older browsers */
-      article, aside, details, figcaption, figure, 
-      footer, header, hgroup, menu, nav, section {
-        display: block;
-      }
-      body {
-        line-height: 1;
-      }
-      ol, ul {
-        list-style: none;
-      }
-      blockquote, q {
-        quotes: none;
-      }
-      blockquote:before, blockquote:after,
-      q:before, q:after {
-        content: '';
-        content: none;
-      }
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      
-      body {
-        background-color: #f0f0f0;
-        color: #0B324A;
-        font-family: Inter, sans-serif;
-        font-size: 13px;
-        margin: 0;
-        text-align: center;
-      }
-      
-      .mb-2 {
-        margin-bottom: 12px;
-      }
-      
-      .button-group {
-        display: flex;
-        gap: 8px;
-      }
-      
-      .button-primary {
-        background: linear-gradient(180deg, #106DD1 0%, #1064D0 11.11%, #105ACF 22.22%, #1051CE 33.33%, #1048CD 44.44%, #0F3FCB 55.56%, #0F35CA 66.67%, #0F2DC9 77.78%, #0F24C8 88.89%, #0F1BC7 100%);
-        width: 100%;
-        border: none;
-        border-radius: 6px;
-        box-shadow: 0 2px 2px rgba(0, 0, 0, .1), 0 2px 8px rgba(0, 0, 0, .1);
-        color: white;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 400;
-        letter-spacing: .3px;
-        padding: 12px 20px;
-        transition: all ease .1s;
-      }
-      
-      .button-primary:hover {
-        background: linear-gradient(180deg, #0957AA 0%, #094EA6 11.11%, #0845A3 22.22%, #083C9F 33.33%, #08339B 44.44%, #072B98 55.56%, #072394 66.67%, #071C90 77.78%, #06158D 88.89%, #060E89 100%);
-        box-shadow: 0 4px 2px rgba(0, 0, 0, .1), 0 2px 20px rgba(0, 0, 0, .1);
-      }
-      
-      .button-primary.disabled {
-        opacity: 0.1;
-        pointer-events: none;
-      }
-      
-      .button-primary.active {
-        opacity: 1;
-      }
-      
-      pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        background-color: #f4f4f4;
-        padding: 15px;
-        max-height: 300px;
-        overflow-y: auto;
-        text-align: left;
-        transition: all 0.3s ease;
-      }
-      
-      table {
-        background-color: white;
-        border: 1px solid rgba(0,0,0,.2);
-        box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.025);      
-        overflow: hidden;
-        width: 100%;
-      }
-      
-      th, td {
-        border: 1px solid #eee;
-        font-size: 11px;
-        padding: 9px;
-        text-align: left;
-      }
-      
-      th {
-        background-color: #f4f4f4;
-        font-weight: 600;
-      }
-      
-      td {
-        vertical-align: middle;
-      }
-      
-      td span:first-child {
-        border: 1px solid rgba(0,0,0,.1);
-        border-radius: 2px;
-      }
-      
-      .table-container, .collection-table {
-        margin-bottom: 24px;
-      }
-      
-      .table-container:last-child {
-        margin-bottom: 0;
-      }
-      
-      #variablesContainer {
-        gap: 16px;
-      }
-      
-      .collection-wrapper {
-        border-radius: 6px;
-        flex: 1;
-      }
-      
-      .collection-wrapper:last-child {
-        margin-bottom: 0;
-      }
-      
-      .title {
-        background: rgba(21, 107, 199, 0.1);
-        border-radius: 6px;
-        color: #0D498A;
-        padding: 8px;
-      }
-      
-      .table-wrapper, .collection-table {
-        border-radius: 6px;
-        box-shadow: 0px 2px 2px rgba(0,0,0,.03), 0px 2px 6px rgba(0,0,0,.03);
-        max-height: 220px;
-        overflow: scroll;
-      }    
-      
-      .alias-pill {
-        background: #f0f0f0;
-        border: 1px solid #eee;
-        border-radius: 6px;
-        padding: 2px 6px;
-      }
-      
-      .gradient {
-        background: linear-gradient(180deg, #106DD1 0%, #1064D0 11.11%, #105ACF 22.22%, #1051CE 33.33%, #1048CD 44.44%, #0F3FCB 55.56%, #0F35CA 66.67%, #0F2DC9 77.78%, #0F24C8 88.89%, #0F1BC7 100%);
-        bottom: 0;
-        left: 0;
-        opacity: 0.05;
-        position: fixed;
-        right: 0;
-        top: 0;
-        z-index: -1;
-      }
-      
-      .no-collections {
-        background: rgba(21, 107, 199, 0.1);
-        border-radius: 6px;
-        color: #0D498A;
-        padding: 8px;
-      }
-      
-      .section {
-        background: rgba(255,255,255,.5);
-        border: 1px solid rgba(255,255,255,.9);
-        box-shadow: 0 1px 0 rgba(0,0,0,.05);
-        border-radius: 9px;
-        margin-bottom: 16px;
-        padding: 16px;
-        position: relative;
-        z-index: 1;
-      }
-      
-      .section:last-child {
-        margin-bottom: 0;
-      }
-      
-      .generated-css {
-        background-color: #f5f5f5;  
-        border-radius: 9px; 
-        font-family: "Courier New", monospace;
-        min-height: 80px;
-        max-height: 320px;
-        padding: 12px; 
-        overflow-y: auto;
-        white-space: pre-wrap; 
-        word-wrap: break-word; 
-        width: 100%;
-      }
-      
-      .generated-css.generated {
-        height: 400px;
-      }
-      
-      .collection-picker {
-        display: flex;
-        gap: 8px;
-        width: 100%;
-      }
-      
-      .collection-name, h3 {
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 12px;
-        text-align: left;
-      }
-      
-      .collection-label {
-        font-weight: 300;
-      }
-      
-      .variable-counter {
-        float: right;
-        font-weight: 300;
-      }
-      
-      .section-title {
-        font-size: 15px;
-      }
-      
-      .local-collections {
-          background-color: rgba(0,0,0,.02);
-          border: 1px solid rgba(0,0,0,.1);
-          border-radius: 9px;
-      }
-      .local-collections div, .local-collections li {
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    
+    body {
+      background: #E5E7EE;
+      color: #0B324A;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      margin: 0;
+      text-align: center;
+    }
+    .plugin-border {
+      background: rgba(255,255,255,.5);
+      position: fixed;
+      z-index: 1;
+    }
+    
+    .plugin-border-bottom {
+      bottom: 0;
+      height: 2px;
+      left: 0;
+      right: 0;
+    }
+    
+    .plugin-border-left {
+      bottom: 0;
+      left: 0;
+      top: 0;
+      width: 2px;
+    }
+    
+    .plugin-border-right {
+      bottom: 0;
+      right: 0;
+      top: 0;
+      width: 2px;
+    }
+    
+    .plugin-border-top {
+      height: 2px;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+    
+    .section {
+      background: rgba(255,255,255,.5);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 1px 0 rgba(0,0,0,.05);
+      border-radius: 9px;
+      margin-bottom: 16px;
+      padding: 16px;
+      position: relative;
+      z-index: 1;
+    }  
+    
+    .container {
+      padding: 16px;
+    }
+    
+    /* Main tabs styling */
+    .main-tabs {
+      background: #106DD1;
+      border: 2px solid white;
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .main-tab, .reload-button {
+      border: 1px solid transparent;
+      border-radius: 9px;
+      color: rgba(255, 255, 255, .8);
+      cursor: pointer;
+      font-weight: 500;
+      padding: 8px 12px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    
+    .main-tab:hover, .reload-button:hover {
+      background: rgba(255,255,255,.1);
+      color: white;
+    }
+    
+    .main-tab.active {
+      background: linear-gradient(45deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .2));
+    }
+
+    .main-tab.active, .reload-button {
+      border: 1px solid rgba(255, 255, 255, .3);
+      color: white;
+      z-index: 3;
+    }
+
+    .main-tab.active:hover {
+      cursor: default;
+    }  
+    
+    .reload-button {
+      margin-left: auto; /* Push to the right */
+    }  
+    
+    .main-content {
+      display: none;
+      padding-top: 16px;
+    }
+    
+    .main-content.active {
+      display: block;
+    }
+    
+    /* Sub tabs styling */
+    .tabs {    
+      align-items: center;
+      display: flex;
+      gap: 4px;
+      margin: 0 16px;
+    }
+    
+    .tab {
+      box-shadow: inset 0 0px 4px rgba(0, 0, 0, .07);
+      border-radius: 9px;
+      border: 2px solid rgba(255, 255, 255, .3);
+      font-weight: 500;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    
+    .tab:hover {
+      background: rgba(255,255,255,.2);
+    }
+    
+    .tab.active {
+      background-color: white;
+      border: 1px solid #fff;
+      border-bottom: none;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, .025), 0 1px 1px rgba(0, 0, 0, .025);
+      position: relative;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    textarea {
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, .1);
+      border-radius: 6px;
+      font-family: "Courier New", monospace;
+      margin-bottom: 16px;
+      min-height: 160px;
+      max-height: 320px;
+      padding: 12px;
+      overflow-y: auto;
+      resize: vertical;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .file-input-wrapper {
+      margin-bottom: 16px;
+      position: relative;
+      text-align: center;
+    }
+    
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+    
+    .file-input-button {
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, .1);
+      border-radius: 6px;
+      color: #0B324A;
+      cursor: pointer;
+      display: block;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      margin-bottom: 8px;
+      min-height: 160px;
+      padding: 12px;
+      position: relative;
+      text-align: center;
+      transition: all 0.2s ease;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .file-input-button:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+    
+    .file-input-icon {
+      display: block;
+      font-size: 32px;
+      margin: 30px auto 15px;
+      color: #106DD1;
+    }
+    
+    .file-name {
+      background-color: rgba(16, 109, 209, 0.1);
+      border-radius: 4px;
+      color: #106DD1;
+      display: inline-block;
+      font-size: 12px;
+      margin-top: 8px;
+      max-width: 100%;
+      overflow: hidden;
+      padding: 4px 8px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .file-name.file-error {
+      background-color: rgba(196, 50, 10, 0.1);
+      color: #c4320a;
+    }
+    
+    .button-primary {
+      background: linear-gradient(180deg, #106DD1 0%, #1064D0 11.11%, #105ACF 22.22%, #1051CE 33.33%, #1048CD 44.44%, #0F3FCB 55.56%, #0F35CA 66.67%, #0F2DC9 77.78%, #0F24C8 88.89%, #0F1BC7 100%);
+      width: 50%;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, .1), 0 2px 8px rgba(0, 0, 0, .1);
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: .3px;
+      padding: 12px 20px;
+      transition: all ease .1s;
+    }
+    
+    .button-primary:hover {
+      background: linear-gradient(180deg, #0957AA 0%, #094EA6 11.11%, #0845A3 22.22%, #083C9F 33.33%, #08339B 44.44%, #072B98 55.56%, #072394 66.67%, #071C90 77.78%, #06158D 88.89%, #060E89 100%);
+      box-shadow: 0 4px 2px rgba(0, 0, 0, .1), 0 2px 20px rgba(0, 0, 0, .1);
+    }
+    
+    .button-primary:disabled {
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .button-primary.active {
+      opacity: 1;
+    }
+    
+    .button-primary.disabled {
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .status-container {
+      display: none; /* Hide by default */
+      margin-top: 16px;
+      min-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .status-container.has-status {
+      display: block; /* Show when it has content */
+    }    
+
+    .status {
+      border: 1px solid rgba(0,0,0,.1);
+      padding: 16px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .status.success {
+      background: #d9fae4;
+      border-color: #10CE51;
+      color: #065221;
+      display: block;
+    }
+
+    .status.error {
+      background: #fad9d9;
+      border-color: #ce1010;
+      color: #520606;      
+      display: block;
+    }
+    
+    .notice {
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: left;
+    }
+    
+    .notice p {
+      margin-bottom: 8px;
+    }
+    
+    .notice code {
+      background-color: rgba(0,0,0,0.05);
+      border-radius: 3px;
+      font-family: monospace;
+      padding: 2px 4px;
+    }
+    
+    .notice pre {
+      background-color: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0, 0, 0, .1);
+      border-radius: 6px;
+      font-family: "Courier New", monospace;
+      margin-bottom: 16px;
+      padding: 12px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .title {
+      background: rgba(21, 107, 199, 0.1);
+      border-radius: 6px;
+      color: #0D498A;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding: 8px;
+      text-align: left;        
+    }
+    
+    .file-error-notice {
+      align-items: center;
+      background: linear-gradient(60deg, #C00F0C, #900B09);
+      border-radius: 6px;
+      color: #FEE9E7;
+      display: none;
+      margin-bottom: 16px;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    
+    .file-error-icon {
+      font-size: 16px;
+      margin-right: 8px;
+    }
+    
+    .file-error-message {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    
+    .collection-picker {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .collection-wrapper {
+      flex: 1;
+    }
+    
+    .local-collections {
+      background-color: rgba(255, 255, 255, .5);
+      border: 1px solid rgba(255, 255, 255, .9);
+      border-radius: 9px;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    
+    .local-collections input[type="radio"], .syntax input[type="checkbox"] {
+      height: 20px;
+      margin-right: 8px;
+      width: 20px;
+    }
+
+
+    .local-collections li {
+      padding: 6px 0;
+    }      
+
+    .local-collections div, .local-collections li {
         align-items: center;
         border-bottom: 1px solid rgba(0, 0, 0, .07);
         box-shadow: 0 1px 0 rgba(255, 255, 255, 01);
         display: flex;
-        gap: 8px;
         padding: 12px;
-      }
-      
-      .local-collections div:last-child, .local-collections li:last-child {
+    }    
+
+    .local-collections div:last-child, .local-collections li:last-child {
         border: none;
         box-shadow: none;
-      }
-      
-      label {
-        font-size: 14px;
-        color: #333;
-      }
-      
-      input[type="radio"] {
-        margin: 0;
-        height: 24px;
-        width: 24px;
-      }
-      
-      .tabs {    
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        gap: 4px;
-        padding: 12px 16px;
-      }
-      
-      .tab {
-        box-shadow: inset 0 0px 4px rgba(0, 0, 0, .07);
-        border-radius: 9px;
-        border: 2px solid rgba(255, 255, 255, .3);
-        font-weight: 500;
-        padding: 8px 10px;
-        cursor: pointer;
-      }
-      
-      .tab:hover {
-        background: rgba(255,255,255,.2);
-      }
-      
-      .tab.active {
-        background-color: white;
-        border: 1px solid #fff;
-        border-bottom: none;
-        box-shadow: 0 2px 2px rgba(0, 0, 0, .025), 0 1px 1px rgba(0, 0, 0, .025);
-        position: relative;
-      }
-      
-      .container {
-        display: none;
-        padding: 16px;
-      }
-      
-      .container.active {
-        display: block;
-      }    
-      
-      .plugin-border {
-        background: rgba(255,255,255,.5);
-        position: fixed;
-        z-index: 1;
-      }
-      
-      .plugin-border-bottom {
-        bottom: 0;
-        height: 2px;
-        left: 0;
-        right: 0;
-      }
-      
-      .plugin-border-left {
-        bottom: 0;
-        left: 0;
-        top: 0;
-        width: 2px;
-      }
-      
-      .plugin-border-right {
-        bottom: 0;
-        right: 0;
-        top: 0;
-        width: 2px;
-      }
-      
-      .plugin-border-top {
-        height: 2px;
-        left: 0;
-        right: 0;
-        top: 0;
-      }
-      
-      .swatch {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        margin-right: 4px;
-        vertical-align: middle;
-        border: 1px solid rgba(0,0,0,.2);
-      }
-
-      .message {
-        background: rgba(16,109,209,.1);
-        border-radius: 9px;
-        border: 1px solid rgba(16,109,209,.3);
-        color: #070e6e;
-        display: none;
-        font-weight: 500;
-        flex-direction: column;
-        margin-top: 16px;
-        padding: 12px;
-        text-align: left;
-      }
-
-      .message p {
-        line-height: 150%;
-        margin-bottom: 12px;
-      }
-
-      .message p:last-child {
-        margin-bottom: 0;
-      }
-
-      .message code {
-        background: rgba(0, 0, 0, .05);
-        border: 1px solid rgba(0, 0, 0, .1);
-        border-radius: 4px;
-        padding: 2px;
-      }
-
-      .message a {
-        color: #070e6e;
-      }
-
-      .message a:hover {
-        text-decoration: none;
-      }
-
-      .section-convert {
-        margin-top: 8px;
-        padding: 6px;
-      }
-
-      .syntax {
-        padding: 8px;
-      }
-
-
-      input[type=checkbox] + label {
-        align-items: center;
-        display: flex;
-        color: #0F24C8;
-        cursor: pointer;
-        justify-content: center;
-      }
-
-      input[type=checkbox] {
-        display: none;
-      }
-
-      input[type=checkbox] + label:before {
-        align-items: center;
-        border: 2px solid #0F24C8;
-        border-radius: 3px;
-        color: transparent;
-        content: "\2715";
-        display: flex;
-        height: 16px;
-        justify-content: center;
-        margin-right: 4px;
-        transition: .1s;
-        vertical-align: middle;
-        width: 16px;
-      }
-
-      input[type=checkbox] + label:active:before {
-        transform: scale(.9);
-      }
-
-      input[type=checkbox]:checked + label:before {
-        background-color: #0F24C8;
-        color: #fff;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="plugin-border plugin-border-bottom"></div>
-    <div class="plugin-border plugin-border-left"></div>
-    <div class="plugin-border plugin-border-right"></div>
-    <div class="plugin-border plugin-border-top"></div>
+    }
     
-    <div class="gradient"></div>
+    .section-convert {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 0;
+    }
     
-    <!-- Tab Headers: Added new "All variables" tab as first -->
+    .syntax {
+      display: flex;
+      align-items: center;
+    }
+    
+    .message {
+      background-color: rgba(16, 109, 209, 0.05);
+      border-radius: 6px;
+      display: none;
+      flex-direction: column;
+      margin-top: 16px;
+      padding: 12px;
+    }
+    
+    .message h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .message p {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    
+    .message a {
+      color: #106DD1;
+      text-decoration: none;
+    }
+    
+    .message a:hover {
+      text-decoration: underline;
+    }
+    
+    .collection-table {
+      background: white;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th, td {
+      border: 1px solid rgba(0, 0, 0, .1);
+      padding: 8px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: rgba(16, 109, 209, 0.05);
+      font-weight: 600;
+    }
+    
+    .swatch {
+      display: inline-block;
+      height: 16px;
+      width: 16px;
+      border: 1px solid rgba(0, 0, 0, .1);
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+    
+    .alias-pill {
+      background-color: rgba(16, 109, 209, 0.1);
+      border-radius: 4px;
+      color: #106DD1;
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 6px;
+    }
+    
+    .generated-css {
+      border-radius: 6px;
+      font-family: "Courier New", monospace;
+      height: 200px;
+      overflow-y: auto;
+      padding: 12px;
+      resize: vertical;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      width: 100%;
+      box-sizing: border-box;
+    }   
+  </style>
+</head>
+<body>
+  <div class="plugin-border plugin-border-bottom"></div>
+  <div class="plugin-border plugin-border-left"></div>
+  <div class="plugin-border plugin-border-right"></div>
+  <div class="plugin-border plugin-border-top"></div>
+  
+    <!-- Main tabs for switching between export and import functionality -->
+    <div class="main-tabs">
+      <div class="main-tab active" data-main-tab="export">Export to CSS</div>
+      <div class="main-tab" data-main-tab="import">Import from CSS</div>
+      <div class="reload-button" id="reload-plugin" title="Reload plugin">Refresh data</div>
+    </div>
+
+    <!-- Export to CSS (First Plugin) -->
+    <div class="main-content active" id="export-content">
+    <!-- Tab Headers for Export functionality -->
     <div class="tabs">
       <div id="tab-btn-all" class="tab active">Convert all variables</div>
       <div id="tab-btn-convert" class="tab">Cherry pick</div>
       <div id="tab-btn-collections" class="tab">All local collections</div>
     </div>
-    
+      
     <!-- Tab Content: All variables -->
     <div id="tab-all" class="container active">
-
-     <div class="section">
-        <h3 class="collection-name">Local collections</h3>
-        <div id="collections-list">
-          <!-- List gets populated dynamically -->
-        </div>
-        <div class="section section-convert">
-          <button id="convert-all" class="button-primary">Convert to CSS</button>
-          <!-- New checkbox for code syntax -->
-          <div class="syntax">
-            <input type="checkbox" id="all-use-code-syntax" />
-            <label for="all-use-code-syntax">Use code syntax</label>
+       <div class="section">
+          <h3 class="title">Local collections</h3>
+          <div id="collections-list" class="collection-picker">
+            <!-- List gets populated dynamically -->
           </div>
-        </div>        
-      </div>
-      <div class="section">
-        <h3>CSS variables</h3>
-        <textarea id="all-css-output" class="generated-css section"></textarea>
-        <div class="button-group">
-          <button id="copy-css-all" class="button-primary disabled">Copy CSS</button>
-          <button id="export-css-all" class="button-primary disabled">Export CSS</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Tab Content: Convert Section -->
-    <div id="tab-convert" class="container">
-      <div id="chooseCollectionOrder" class="section">
-        <div class="collection-picker">
-          <div class="collection-wrapper collection-root">
-            <h3 class="title">Primitive collection</h3>
-            <div id="rootSection" class="local-collections">
-              <!-- Radio buttons inserted here -->
+          <div class="section section-convert">
+            <button id="convert-all" class="button-primary">Convert to CSS</button>
+            <!-- New checkbox for code syntax -->
+            <div class="syntax">
+              <input type="checkbox" id="all-use-code-syntax" />
+              <label for="all-use-code-syntax">Use code syntax</label>
             </div>
-          </div>
-          <div class="collection-wrapper collection-semantic">
-            <h3 class="title">Semantic collection</h3>
-            <div id="themeSection" class="local-collections">
-              <!-- Radio buttons inserted here -->
-            </div>
-          </div>
+          </div>        
         </div>
-        <div class="section section-convert">
-          <button id="convert" class="button-primary">Convert to CSS</button>
-          <!-- New checkbox for code syntax -->
-          <div class="syntax">
-            <input type="checkbox" id="convert-use-code-syntax" />
-            <label for="convert-use-code-syntax">Use code syntax</label>
-          </div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="collection-wrapper">
-          <h3>CSS Variables Output</h3>
-          <textarea id="css-output" class="generated-css section"></textarea>
+        <div class="section">
+          <h3 class="title">CSS variables output</h3>
+          <textarea id="all-css-output" class="generated-css section"></textarea>
           <div class="button-group">
-            <button id="copy-css" class="button-primary disabled">Copy CSS</button>
-            <button id="export-css" class="button-primary disabled">Export CSS</button>
+            <button id="copy-css-all" class="button-primary disabled">Copy CSS</button>
+            <button id="export-css-all" class="button-primary disabled">Export CSS</button>
           </div>
-          <div class="message">
-            <h3>Working with light and dark mode</h3>
-            <p>Add <code>@media(prefers-color-scheme: dark){}</code> around the <code>root:</code> for your dark mode variables.</p>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">Learn more</a>.</p>
+        </div>
+      </div>
+      
+      <!-- Tab Content: Convert Section -->
+      <div id="tab-convert" class="container">
+        <div id="chooseCollectionOrder" class="section">
+          <div class="collection-picker">
+            <div class="collection-wrapper collection-root">
+              <h3 class="title">Primitive collection</h3>
+              <div id="rootSection" class="local-collections">
+                <!-- Radio buttons inserted here -->
+              </div>
+            </div>
+            <div class="collection-wrapper collection-semantic">
+              <h3 class="title">Semantic collection</h3>
+              <div id="themeSection" class="local-collections">
+                <!-- Radio buttons inserted here -->
+              </div>
+            </div>
           </div>
+          <div class="section section-convert">
+            <button id="convert" class="button-primary">Convert to CSS</button>
+            <!-- New checkbox for code syntax -->
+            <div class="syntax">
+              <input type="checkbox" id="convert-use-code-syntax" />
+              <label for="convert-use-code-syntax">Use code syntax</label>
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="collection-wrapper">
+            <h3 class="title">CSS variables output</h3>
+            <textarea id="css-output" class="generated-css section"></textarea>
+            <div class="button-group">
+              <button id="copy-css" class="button-primary disabled">Copy CSS</button>
+              <button id="export-css" class="button-primary disabled">Export CSS</button>
+            </div>
+            <div class="message">
+              <h3>Working with light and dark mode</h3>
+              <p>Add <code>@media(prefers-color-scheme: dark){}</code> around the <code>root:</code> for your dark mode variables.</p>
+              <p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">Learn more</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tab Content: Collections Section -->
+      <div id="tab-collections" class="container">
+        <div id="tables-container">
+          <!-- One table per collection will be inserted here -->
         </div>
       </div>
     </div>
     
-    <!-- Tab Content: Collections Section -->
-    <div id="tab-collections" class="container">
-      <div id="tables-container">
-        <!-- One table per collection will be inserted here -->
+    <!-- Import from CSS (Second Plugin) -->
+    <div class="main-content" id="import-content">
+      <div class="tabs">
+        <div class="tab active" data-tab="paste">Paste CSS</div>
+        <div class="tab" data-tab="file">Upload File</div>
+      </div>
+      <div class="container">
+        <!-- In the paste-content section -->
+        <div class="tab-content active section" id="paste-content">
+          <textarea id="css-input" placeholder="/* Collection name: Color */
+        /* Mode: Light */
+        :root {
+          --primary-color: #18a0fb;
+          --secondary-color: #0d8ce6;
+        }"></textarea>
+          <button id="parse-css" class="button-primary">Create Variables</button>
+          <div id="paste-status" class="status-container"></div>
+        </div>
+
+        <!-- In the file-content section -->
+        <div class="tab-content section" id="file-content">
+          <div class="file-input-wrapper">
+            <div class="file-input-button">
+              <span class="file-input-icon">📄</span>
+              <span>Drag and drop a CSS file here<br>or click to browse</span>
+              <div id="file-name-display"></div>
+            </div>
+            <input type="file" id="file-input" accept=".css">
+          </div>
+          <button id="parse-file" class="button-primary" disabled>Create Variables</button>
+          <div id="file-status" class="status-container"></div>
+        </div>
+        
+        <div class="section">
+          <h2 class="title">Required CSS Format</h2>
+          <div class="notice">
+            <p>CSS must include comments to define collections and modes:</p>
+            <pre>/* Collection name: Color Primitives */
+  /* Mode: Light */
+  :root {
+    --slate-100: #f3f3f3;
+    --slate-200: #e3e3e3;
+  }
+  /* Collection name: Color */
+  /* Mode: Dark */
+  :root {
+    --background-default: var(--slate-100);
+    --text-default: var(--slate-900);
+  }</pre>
+            <p>The plugin will:</p>
+            <ul style="list-style-type: disc; margin-left: 16px;">
+              <li>Create Figma collections based on<code>/* Collection name: X */</code></li>
+              <li>Create modes within collections based on<code>/* Mode: Y */</code></li>
+              <li>Support variable references using<code>var(--variable-name)</code></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     
     <script>
-      // Global variables
+      // Main tab switching
+      document.querySelectorAll('.main-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Update tab classes
+          document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // Update content visibility
+          document.querySelectorAll('.main-content').forEach(c => c.classList.remove('active'));
+          const targetId = `${tab.dataset.mainTab}-content`;
+          document.getElementById(targetId).classList.add('active');
+        });
+      });
+
+
+
+
+
+
+      // =============================================
+      // Initialize export tabs to show only the first tab content
+      // =============================================      
+      function initializeExportTabs() {
+        // Hide all tab content containers except the first one
+        const tabContainers = document.querySelectorAll("#export-content .container");
+        tabContainers.forEach((container, index) => {
+          if (index === 0) {
+            container.style.display = "block"; // Show first tab
+          } else {
+            container.style.display = "none"; // Hide others
+          }
+        });
+        
+        // Set the first tab button as active
+        const tabButtons = document.querySelectorAll("#export-content .tabs .tab");
+        tabButtons.forEach((button, index) => {
+          if (index === 0) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
+      }
+
+// Call the initialization function when the page loads
+document.addEventListener('DOMContentLoaded', initializeExportTabs);
+      
+      // =============================================
+      // EXPORT FUNCTIONALITY (FIRST PLUGIN)
+      // =============================================
+      
+      // Global variables for export functionality
       let scannedVariables = [];
       let availableCollections = [];
       let selectedRoot = null;
@@ -711,12 +932,16 @@
       function populateCollectionsList(collections) {
         const listContainer = document.getElementById("collections-list");
         listContainer.innerHTML = "";
-      
+
         if (collections.length === 0) {
-          listContainer.textContent = "No collections found.";
+          // Create a status error div instead of just text
+          const errorDiv = document.createElement("div");
+          errorDiv.className = "status error";
+          errorDiv.textContent = "No collections found.";
+          listContainer.appendChild(errorDiv);
           return;
         }
-      
+
         const ul = document.createElement("ul");
         ul.classList.add("local-collections");
         collections.forEach(collection => {
@@ -727,18 +952,31 @@
         listContainer.appendChild(ul);
       }
       
-      // Tab switching logic.
-      function switchTab(tabId) {
-        const tabs = document.querySelectorAll(".container");
-        tabs.forEach(tab => {
-          tab.classList.remove("active");
-        });
-        document.getElementById(tabId).classList.add("active");
+      // Tab switching logic for export tabs.
+      function switchExportTab(tabId) {
+        console.log("Switching to tab:", tabId); // Debug log
         
-        // Update tab header classes.
-        document.querySelectorAll(".tabs .tab").forEach(tabButton => {
-          tabButton.classList.remove("active");
+        // Hide all tab content containers
+        const tabContainers = document.querySelectorAll("#export-content .container");
+        tabContainers.forEach(container => {
+          container.style.display = "none";
         });
+        
+        // Show the selected tab content
+        const selectedTab = document.getElementById(tabId);
+        if (selectedTab) {
+          selectedTab.style.display = "block";
+        } else {
+          console.error("Tab content not found:", tabId); // Debug log
+        }
+        
+        // Update active state of tab buttons
+        const tabButtons = document.querySelectorAll("#export-content .tabs .tab");
+        tabButtons.forEach(button => {
+          button.classList.remove("active");
+        });
+        
+        // Add active class to the clicked tab button
         if (tabId === "tab-all") {
           document.getElementById("tab-btn-all").classList.add("active");
         } else if (tabId === "tab-convert") {
@@ -747,49 +985,31 @@
           document.getElementById("tab-btn-collections").classList.add("active");
         }
       }
-      
-      // Set up tab header click events.
-      document.getElementById("tab-btn-all").onclick = () => switchTab("tab-all");
-      document.getElementById("tab-btn-convert").onclick = () => switchTab("tab-convert");
-      document.getElementById("tab-btn-collections").onclick = () => switchTab("tab-collections");
-        
-      // Handle messages from the main code.
-      onmessage = (event) => {
-        const msg = event.data.pluginMessage;
-        if (msg.type === "init-data") {
-          scannedVariables = msg.variables;
-          availableCollections = msg.collections;
-          // Populate UI components.
-          populateRadioGroups(availableCollections);
-          populateCollectionsList(availableCollections);
-          buildVariablesTables(scannedVariables, availableCollections);
-          
-          // Log all variables that have a codeSyntax applied.
-          console.log("Variables with codeSyntax:");
-          scannedVariables
-            .filter(variable => variable.codeSyntax && variable.codeSyntax !== "")
-            .forEach((variable, index) => {
-              console.log(`Variable[${index}]: ${variable.name}`, variable.codeSyntax);
-            });
-          
-        } else if (msg.type === "display-css") {
-          const cssOutputElem = document.getElementById("css-output");
-          cssOutputElem.value = msg.css;
-          cssOutputElem.classList.add("generated");
-          cssOutputElem.style.setProperty("height", "400px", "important");
-          document.getElementById("copy-css").classList.remove("disabled");
-          document.getElementById("copy-css").classList.add("active");
-          document.getElementById("export-css").classList.remove("disabled");
-          document.getElementById("export-css").classList.add("active");
-        } else if (msg.type === "error") {
-          alert("Error: " + msg.message);
-        }
-      };
-      
-      // Initially disable the Copy and Export CSS buttons (for convert tab).
-      document.getElementById("copy-css").classList.add("disabled");
-      document.getElementById("export-css").classList.add("disabled");
 
+      // Set up tab header click events for export tabs.
+      document.getElementById("tab-btn-all").addEventListener('click', function() {
+        switchExportTab("tab-all");
+      });
+
+      document.getElementById("tab-btn-convert").addEventListener('click', function() {
+        switchExportTab("tab-convert");
+      });
+
+      document.getElementById("tab-btn-collections").addEventListener('click', function() {
+        switchExportTab("tab-collections");
+      });
+      
+      // Tab switching for import tabs
+      document.querySelectorAll('#import-content .tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('#import-content .tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('#import-content .tab-content').forEach(c => c.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
+        });
+      });
+      
       function getWebCodeSyntax(variable) {
         if (variable.codeSyntax) {
           if (typeof variable.codeSyntax === "object") {
@@ -798,7 +1018,7 @@
               return variable.codeSyntax.WEB;
             }
           } else if (typeof variable.codeSyntax === "string") {
-            // If it’s a string, assume it’s the CSS name.
+            // If it's a string, assume it's the CSS name.
             return variable.codeSyntax;
           }
         }
@@ -829,98 +1049,42 @@
         cssLines.push(`/* Mode: ${primitiveModeName} */`);
         cssLines.push(":root {");
         const rootVars = scannedVariables.filter(v => v.collectionId === selectedRoot);
-        
-        rootVars.forEach(variable => {
-          // Compute CSS variable name using code syntax if available.
-          let cssName = "";
-          if (useCodeSyntax) {
-            const syntaxName = getWebCodeSyntax(variable);
-            if (syntaxName !== "") {
-              cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-            } else {
-              cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-            }
+      
+      rootVars.forEach(variable => {
+        // Compute CSS variable name using code syntax if available.
+        let cssName = "";
+        if (useCodeSyntax) {
+          const syntaxName = getWebCodeSyntax(variable);
+          if (syntaxName !== "") {
+            cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
           } else {
             cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
           }
-          // The value remains as the default mode value.
-          let defaultValue = defaultModeId ? variable.modeValues[defaultModeId] || "" : "";
-          if (defaultValue.startsWith("alias:")) {
-            let aliasName = defaultValue.slice(6);
-            aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-            defaultValue = `var(--${aliasName})`;
-          }
-          
-          cssLines.push(`  --${cssName}: ${defaultValue};`);
-        });
-        cssLines.push("}");
-        cssLines.push("");
-        
-        // PROCESS SEMANTIC (theme) collection for each mode.
-        const themeColl = availableCollections.find(c => c.id === selectedTheme);
-        if (themeColl && themeColl.modes && themeColl.modes.length > 0) {
-          const themeVars = scannedVariables.filter(v => v.collectionId === selectedTheme);
-          themeColl.modes.forEach(mode => {
-            cssLines.push(`/* Collection name: ${themeColl.name} */`);
-            cssLines.push(`/* Mode: ${mode.name} */`);
-            cssLines.push(":root {");
-            themeVars.forEach(variable => {
-              let cssName = "";
-              if (useCodeSyntax) {
-                const syntaxName = getWebCodeSyntax(variable);
-                if (syntaxName !== "") {
-                  cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-                } else {
-                  cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-                }
-              } else {
-                cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-              }
-              let modeDefault = variable.modeValues[mode.modeId] || "";
-              if (modeDefault.startsWith("alias:")) {
-                let aliasName = modeDefault.slice(6);
-                aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-                modeDefault = `var(--${aliasName})`;
-              }
-              cssLines.push(`  --${cssName}: ${modeDefault};`);
-            });
-            cssLines.push("}");
-            cssLines.push("");
-          });
+        } else {
+          cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+        }
+        // The value remains as the default mode value.
+        let defaultValue = defaultModeId ? variable.modeValues[defaultModeId] || "" : "";
+        if (defaultValue.startsWith("alias:")) {
+          let aliasName = defaultValue.slice(6);
+          aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+          defaultValue = `var(--${aliasName})`;
         }
         
-        const cssOutput = cssLines.join("\n");
-        const cssOutputElem = document.getElementById("css-output");
-        cssOutputElem.value = cssOutput;
-        cssOutputElem.classList.add("generated");
-        cssOutputElem.style.setProperty("height", "400px", "important");
-        document.getElementById("copy-css").classList.remove("disabled");
-        document.getElementById("copy-css").classList.add("active");
-        document.getElementById("export-css").classList.remove("disabled");
-        document.getElementById("export-css").classList.add("active");
-
-        document.querySelector("#tab-convert .message").style.display = "flex";
-        
-        parent.postMessage({ pluginMessage: { type: "display-css", css: cssOutput } }, "*");
-      }
+        cssLines.push(`  --${cssName}: ${defaultValue};`);
+      });
+      cssLines.push("}");
+      cssLines.push("");
       
-      // Conversion logic for the All Variables tab.
-      function allVariablesTabCss() {
-        // Read state from the "all-use-code-syntax" checkbox.
-        const useCodeSyntax = document.getElementById("all-use-code-syntax").checked;
-        let cssLines = [];
-        availableCollections.forEach(collection => {
-          let defaultModeName = "default mode";
-          let defaultModeId = "";
-          if (collection.modes && collection.modes.length > 0) {
-            defaultModeId = collection.modes[0].modeId;
-            defaultModeName = collection.modes[0].name;
-          }
-          cssLines.push(`/* Collection name: ${collection.name} */`);
-          cssLines.push(`/* Mode: ${defaultModeName} */`);
+      // PROCESS SEMANTIC (theme) collection for each mode.
+      const themeColl = availableCollections.find(c => c.id === selectedTheme);
+      if (themeColl && themeColl.modes && themeColl.modes.length > 0) {
+        const themeVars = scannedVariables.filter(v => v.collectionId === selectedTheme);
+        themeColl.modes.forEach(mode => {
+          cssLines.push(`/* Collection name: ${themeColl.name} */`);
+          cssLines.push(`/* Mode: ${mode.name} */`);
           cssLines.push(":root {");
-          const collVars = scannedVariables.filter(v => v.collectionId === collection.id);
-          collVars.forEach(variable => {
+          themeVars.forEach(variable => {
             let cssName = "";
             if (useCodeSyntax) {
               const syntaxName = getWebCodeSyntax(variable);
@@ -932,92 +1096,471 @@
             } else {
               cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
             }
-            let defaultValue = defaultModeId ? variable.modeValues[defaultModeId] || "" : "";
-            if (defaultValue.startsWith("alias:")) {
-              let aliasName = defaultValue.slice(6);
+            let modeDefault = variable.modeValues[mode.modeId] || "";
+            if (modeDefault.startsWith("alias:")) {
+              let aliasName = modeDefault.slice(6);
               aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
-              defaultValue = `var(--${aliasName})`;
+              modeDefault = `var(--${aliasName})`;
             }
-            cssLines.push(`  --${cssName}: ${defaultValue};`);
+            cssLines.push(`  --${cssName}: ${modeDefault};`);
           });
           cssLines.push("}");
           cssLines.push("");
         });
-        
-        const cssOutput = cssLines.join("\n");
-        const allCssOutputElem = document.getElementById("all-css-output");
-        allCssOutputElem.value = cssOutput;
-        allCssOutputElem.classList.add("generated");
-        allCssOutputElem.style.setProperty("height", "400px", "important");
-        document.getElementById("copy-css-all").classList.remove("disabled");
-        document.getElementById("copy-css-all").classList.add("active");
-        document.getElementById("export-css-all").classList.remove("disabled");
-        document.getElementById("export-css-all").classList.add("active");
       }
       
-      // Attach conversion functions to buttons.
-      document.getElementById("convert").onclick = convertTabCss;
-      document.getElementById("convert-all").onclick = allVariablesTabCss;
+      const cssOutput = cssLines.join("\n");
+      const cssOutputElem = document.getElementById("css-output");
+      cssOutputElem.value = cssOutput;
+      cssOutputElem.classList.add("generated");
+      cssOutputElem.style.setProperty("height", "400px", "important");
+      document.getElementById("copy-css").classList.remove("disabled");
+      document.getElementById("copy-css").classList.add("active");
+      document.getElementById("export-css").classList.remove("disabled");
+      document.getElementById("export-css").classList.add("active");
+      document.querySelector("#tab-convert .message").style.display = "flex";
       
-      // Copy and Export for Convert tab.
-      document.getElementById("copy-css").onclick = () => {
-        const cssText = document.getElementById("css-output").value;
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-          navigator.clipboard.writeText(cssText)
-            .then(() => alert("CSS copied!"))
-            .catch((err) => alert("Failed to copy CSS: " + err));
-        } else {
-          const textarea = document.getElementById("css-output");
-          textarea.select();
-          try {
-            document.execCommand("copy");
-            alert("CSS copied!");
-          } catch (err) {
-            alert("Failed to copy CSS: " + err);
-          }
+      parent.postMessage({ pluginMessage: { type: "display-css", css: cssOutput } }, "*");
+    }
+    
+    // Conversion logic for the All Variables tab.
+    function allVariablesTabCss() {
+      // Read state from the "all-use-code-syntax" checkbox.
+      const useCodeSyntax = document.getElementById("all-use-code-syntax").checked;
+      let cssLines = [];
+      
+      // Process each collection
+      availableCollections.forEach(collection => {
+        // For each collection, process all its modes
+        if (collection.modes && collection.modes.length > 0) {
+          collection.modes.forEach(mode => {
+            const modeName = mode.name;
+            const modeId = mode.modeId;
+            
+            cssLines.push(`/* Collection name: ${collection.name} */`);
+            cssLines.push(`/* Mode: ${modeName} */`);
+            cssLines.push(":root {");
+            
+            const collVars = scannedVariables.filter(v => v.collectionId === collection.id);
+            
+            collVars.forEach(variable => {
+              let cssName = "";
+              
+              if (useCodeSyntax) {
+                const syntaxName = getWebCodeSyntax(variable);
+                if (syntaxName !== "") {
+                  cssName = syntaxName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                } else {
+                  cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                }
+              } else {
+                cssName = variable.name.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+              }
+              
+              // Get the value for this specific mode
+              let modeValue = variable.modeValues[modeId] || "";
+              
+              if (modeValue.startsWith("alias:")) {
+                let aliasName = modeValue.slice(6);
+                aliasName = aliasName.replace(/\s+/g, "-").replace(/\//g, "-").toLowerCase();
+                modeValue = `var(--${aliasName})`;
+              }
+              
+              cssLines.push(`  --${cssName}: ${modeValue};`);
+            });
+            
+            cssLines.push("}");
+            cssLines.push("");
+          });
         }
-      };
+      });
       
-      document.getElementById("export-css").onclick = () => {
-        const cssText = document.getElementById("css-output").value;
-        const blob = new Blob([cssText], { type: "text/css" });
-        const url = URL.createObjectURL(blob);
-        const anchor = document.createElement("a");
-        anchor.href = url;
-        anchor.download = "variables.css";
-        anchor.click();
-        URL.revokeObjectURL(url);
-      };
+      const cssOutput = cssLines.join("\n");
+      const allCssOutputElem = document.getElementById("all-css-output");
+      allCssOutputElem.value = cssOutput;
+      allCssOutputElem.classList.add("generated");
+      allCssOutputElem.style.setProperty("height", "400px", "important");
+      document.getElementById("copy-css-all").classList.remove("disabled");
+      document.getElementById("copy-css-all").classList.add("active");
+      document.getElementById("export-css-all").classList.remove("disabled");
+      document.getElementById("export-css-all").classList.add("active");
+    }
+
+// Attach conversion functions to buttons.
+document.getElementById("convert").onclick = convertTabCss;
+document.getElementById("convert-all").onclick = allVariablesTabCss;
+
+// Copy and Export for Convert tab.
+document.getElementById("copy-css").onclick = () => {
+  const cssText = document.getElementById("css-output").value;
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+    navigator.clipboard.writeText(cssText)
+      .then(() => alert("CSS copied!"))
+      .catch((err) => alert("Failed to copy CSS: " + err));
+  } else {
+    const textarea = document.getElementById("css-output");
+    textarea.select();
+    try {
+      document.execCommand("copy");
+      alert("CSS copied!");
+    } catch (err) {
+      alert("Failed to copy CSS: " + err);
+    }
+  }
+};
+
+document.getElementById("export-css").onclick = () => {
+  const cssText = document.getElementById("css-output").value;
+  const blob = new Blob([cssText], { type: "text/css" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "variables.css";
+  anchor.click();
+  URL.revokeObjectURL(url);
+};
+
+// Copy and Export for All Variables tab.
+document.getElementById("copy-css-all").onclick = () => {
+  const cssText = document.getElementById("all-css-output").value;
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+    navigator.clipboard.writeText(cssText)
+      .then(() => alert("CSS copied!"))
+      .catch((err) => alert("Failed to copy CSS: " + err));
+  } else {
+    const textarea = document.getElementById("all-css-output");
+    textarea.select();
+    try {
+      document.execCommand("copy");
+      alert("CSS copied!");
+    } catch (err) {
+      alert("Failed to copy CSS: " + err);
+    }
+  }
+};
+
+document.getElementById("export-css-all").onclick = () => {
+  const cssText = document.getElementById("all-css-output").value;
+  const blob = new Blob([cssText], { type: "text/css" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "all-variables.css";
+  anchor.click();
+  URL.revokeObjectURL(url);
+};
+
+// =============================================
+// IMPORT FUNCTIONALITY (SECOND PLUGIN)
+// =============================================
+
+// Validate CSS content
+function validateCSSContent(cssText) {
+  // Check if the content has CSS variables
+  if (!cssText.includes('--')) {
+    return { valid: false, message: 'No CSS variables found in the file' };
+  }
+  
+  // Check if the content has collection and mode comments
+  const hasCollectionComment = /\/\*\s*Collection name:/i.test(cssText);
+  const hasModeComment = /\/\*\s*Mode:/i.test(cssText);
+  
+  if (!hasCollectionComment || !hasModeComment) {
+    return { 
+      valid: false, 
+      message: 'Missing required comments. CSS must include "/* Collection name: */" and "/* Mode: */" comments' 
+    };
+  }
+  
+  return { valid: true };
+}
+
+// Validate file type
+function validateFileType(file) {
+  // Check if file exists
+  if (!file) {
+    return { valid: false, message: 'No file selected' };
+  }
+  
+  // Check file extension
+  const fileName = file.name.toLowerCase();
+  if (!fileName.endsWith('.css')) {
+    return { valid: false, message: 'File must be a CSS file (.css)' };
+  }
+  
+  return { valid: true };
+}
+
+// Show file error using the standard status classes
+function showFileError(message) {
+  // Get the file status container
+  const statusContainer = document.getElementById('file-status');
+  
+  if (!statusContainer) {
+    console.error('File status container not found');
+    return;
+  }
+  
+  // Create or update the status message
+  let statusMessage = statusContainer.querySelector('.status');
+  if (!statusMessage) {
+    statusMessage = document.createElement('div');
+    statusMessage.className = 'status';
+    statusContainer.appendChild(statusMessage);
+  }
+  
+  // Set the message and error status
+  statusMessage.textContent = message;
+  statusMessage.className = 'status error';
+  
+  // Make sure the container is visible
+  statusContainer.style.display = 'block';
+}
+
+// Hide file error
+function hideFileError() {
+  const statusContainer = document.getElementById('file-status');
+  if (statusContainer) {
+    statusContainer.style.display = 'none';
+  }
+}
+
+// Hide file error notice
+function hideFileError() {
+  const fileErrorNotice = document.getElementById('file-error-notice');
+  if (fileErrorNotice) {
+    fileErrorNotice.style.display = 'none';
+  }
+}
+
+// Handle file input
+document.getElementById('file-input').addEventListener('change', (event) => {
+  const fileInput = event.target;
+  const parseFileButton = document.getElementById('parse-file');
+  const fileNameDisplay = document.getElementById('file-name-display');
+  
+  // Hide any previous error notice
+  hideFileError();
+  
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    
+    // Validate file type
+    const fileValidation = validateFileType(file);
+    if (!fileValidation.valid) {
+      showFileError(fileValidation.message);
+      fileNameDisplay.innerHTML = '';
+      parseFileButton.disabled = true;
+      return;
+    }
+    
+    // Read file content to validate
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const cssText = e.target.result;
+      const contentValidation = validateCSSContent(cssText);
       
-      // Copy and Export for All Variables tab.
-      document.getElementById("copy-css-all").onclick = () => {
-        const cssText = document.getElementById("all-css-output").value;
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-          navigator.clipboard.writeText(cssText)
-            .then(() => alert("CSS copied!"))
-            .catch((err) => alert("Failed to copy CSS: " + err));
-        } else {
-          const textarea = document.getElementById("all-css-output");
-          textarea.select();
-          try {
-            document.execCommand("copy");
-            alert("CSS copied!");
-          } catch (err) {
-            alert("Failed to copy CSS: " + err);
-          }
-        }
-      };
-      
-      document.getElementById("export-css-all").onclick = () => {
-        const cssText = document.getElementById("all-css-output").value;
-        const blob = new Blob([cssText], { type: "text/css" });
-        const url = URL.createObjectURL(blob);
-        const anchor = document.createElement("a");
-        anchor.href = url;
-        anchor.download = "all-variables.css";
-        anchor.click();
-        URL.revokeObjectURL(url);
-      };
-    </script>
-  </body>
+      if (!contentValidation.valid) {
+        fileNameDisplay.innerHTML = `<span class="file-name file-error">${file.name}</span>`;
+        showFileError(contentValidation.message);
+        parseFileButton.disabled = true;
+      } else {
+        fileNameDisplay.innerHTML = `<span class="file-name">${file.name}</span>`;
+        parseFileButton.disabled = false;
+      }
+    };
+    
+    reader.onerror = () => {
+      showFileError('Error reading file');
+      fileNameDisplay.innerHTML = '';
+      parseFileButton.disabled = true;
+    };
+    
+    reader.readAsText(file);
+  } else {
+    fileNameDisplay.innerHTML = '';
+    parseFileButton.disabled = true;
+  }
+});
+
+// Parse CSS from file
+document.getElementById('parse-file').addEventListener('click', () => {
+  const fileInput = document.getElementById('file-input');
+  const file = fileInput.files[0];
+  
+  // Validate file type again
+  const fileValidation = validateFileType(file);
+  if (!fileValidation.valid) {
+    showFileError(fileValidation.message);
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const cssText = event.target.result;
+    
+    // Validate CSS content again before sending
+    const contentValidation = validateCSSContent(cssText);
+    if (!contentValidation.valid) {
+      showFileError(contentValidation.message);
+      return;
+    }
+    
+    parent.postMessage({ pluginMessage: { type: 'parse-css', cssText } }, '*');
+  };
+  
+  reader.onerror = () => {
+    showFileError('Error reading the file');
+  };
+  
+  reader.readAsText(file);
+});
+
+// Parse CSS from file
+document.getElementById('parse-file').addEventListener('click', () => {
+  const fileInput = document.getElementById('file-input');
+  const file = fileInput.files[0];
+  
+  // Validate file type again
+  const fileValidation = validateFileType(file);
+  if (!fileValidation.valid) {
+    showFileError(fileValidation.message);
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const cssText = event.target.result;
+    
+    // Validate CSS content again before sending
+    const contentValidation = validateCSSContent(cssText);
+    if (!contentValidation.valid) {
+      showStatus(contentValidation.message, 'error');
+      return;
+    }
+    
+    parent.postMessage({ pluginMessage: { type: 'parse-css', cssText } }, '*');
+  };
+  
+  reader.onerror = () => {
+    showStatus('Error reading the file', 'error');
+  };
+  
+  reader.readAsText(file);
+});
+
+function showStatus(message, status) {
+  // Determine which status container to use based on the active tab
+  let statusElement;
+  
+  // Check if we're in the import section
+  const importContent = document.getElementById('import-content');
+  if (importContent && importContent.classList.contains('active')) {
+    // We're in the import section, find the active tab
+    const activeTab = document.querySelector('#import-content .tab.active');
+    if (activeTab) {
+      const tabId = activeTab.dataset.tab;
+      if (tabId === 'paste') {
+        statusElement = document.getElementById('paste-status');
+      } else if (tabId === 'file') {
+        statusElement = document.getElementById('file-status');
+      }
+    }
+  }
+  
+  // If we couldn't find a specific status element, try to find a generic one
+  if (!statusElement) {
+    statusElement = document.getElementById('status');
+  }
+  
+  // If we still don't have a status element, create a temporary one
+  if (!statusElement) {
+    // Find the active container to append to
+    const activeContainer = document.querySelector('.main-content.active .container');
+    if (activeContainer) {
+      statusElement = document.createElement('div');
+      statusElement.id = 'temp-status';
+      statusElement.className = 'status-container';
+      activeContainer.appendChild(statusElement);
+    } else {
+      console.error('No active container found to show status');
+      alert(message); // Fallback to alert
+      return;
+    }
+  }
+  
+  // Create or update the status message
+  let statusMessage = statusElement.querySelector('.status');
+  if (!statusMessage) {
+    statusMessage = document.createElement('div');
+    statusMessage.className = 'status';
+    statusElement.appendChild(statusMessage);
+  }
+  
+  // Set the message and status
+  statusMessage.textContent = message;
+  statusMessage.className = `status ${status}`;
+  
+  // Make sure the container is visible
+  statusElement.style.display = 'block';
+  
+  // Scroll to make the message visible if needed
+  statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// =============================================
+// HANDLE MESSAGES FROM THE PLUGIN
+// =============================================
+
+// Handle messages from the main code.
+onmessage = (event) => {
+  const msg = event.data.pluginMessage;
+  
+  // Handle messages for export functionality
+  if (msg.type === "init-data") {
+    scannedVariables = msg.variables;
+    availableCollections = msg.collections;
+    // Populate UI components.
+    populateRadioGroups(availableCollections);
+    populateCollectionsList(availableCollections);
+    buildVariablesTables(scannedVariables, availableCollections);
+  } 
+  else if (msg.type === "display-css") {
+    const cssOutputElem = document.getElementById("css-output");
+    cssOutputElem.value = msg.css;
+    cssOutputElem.classList.add("generated");
+    cssOutputElem.style.setProperty("height", "400px", "important");
+    document.getElementById("copy-css").classList.remove("disabled");
+    document.getElementById("copy-css").classList.add("active");
+    document.getElementById("export-css").classList.remove("disabled");
+    document.getElementById("export-css").classList.add("active");
+  } 
+  // Handle messages for import functionality
+  else if (msg.type === 'status') {
+    showStatus(msg.message, msg.status);
+  }
+  else if (msg.type === "error") {
+    alert("Error: " + msg.message);
+  }
+};
+
+// Add reload functionality
+document.getElementById('reload-plugin').addEventListener('click', () => {
+  // Show a brief loading indicator
+  const reloadButton = document.getElementById('reload-plugin');
+  reloadButton.textContent = 'Refreshing';
+  reloadButton.style.pointerEvents = 'none';
+  
+  // Tell the plugin to reload data
+  parent.postMessage({ pluginMessage: { type: 'reload-plugin' } }, '*');
+  
+  // Reset UI state
+  setTimeout(() => {
+    reloadButton.textContent = 'Reload data';
+    reloadButton.style.pointerEvents = 'auto';
+  }, 1000);
+});
+</script>
+
+</body>
 </html>
